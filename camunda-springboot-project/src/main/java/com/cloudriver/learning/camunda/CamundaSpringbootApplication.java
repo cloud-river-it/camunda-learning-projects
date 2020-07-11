@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CamundaSpringbootProjectApplication {
+public class CamundaSpringbootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CamundaSpringbootProjectApplication.class, args);
+		SpringApplication.run(CamundaSpringbootApplication.class, args);
 	}
 
 }
