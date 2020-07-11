@@ -1,11 +1,18 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.cloudriver.learning</groupId>
+  	<parent>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-parent</artifactId>
+  		<version>2.3.1.RELEASE</version>
+  		<relativePath/> <!-- lookup parent from repository -->
+  	</parent>
+
+  <groupId>com.cloudriver.learning.camunda</groupId>
   <artifactId>camunda-learning-projects</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>camunda learning Parent</name>
+  <name>camunda learning projects</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -13,4 +20,31 @@
     <junit.version>3.8.1</junit.version>
     <spring.version>4.3.5.RELEASE</spring.version>
   </properties>
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <version> 2.3.1.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version> 2.3.1.RELEASE</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit.vintage</groupId>
+          <artifactId>junit-vintage-engine</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+
+
+  <modules>
+<module>camunda-springboot-project</module>
+	</modules>
 </project>
