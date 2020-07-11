@@ -1,0 +1,16 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.cloudriver.learning</groupId>
+  <artifactId>camunda-learning-projects</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>camunda learning Parent</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>3.8.1</junit.version>
+    <spring.version>4.3.5.RELEASE</spring.version>
+  </properties>
+</project>
