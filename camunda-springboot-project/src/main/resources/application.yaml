@@ -1,7 +1,3 @@
-camunda.bpm:
-  admin-user:
-    id: demo
-    password: demo
-    firstName: Demo
-  filter:
-    create: All tasks
+spring:
+  main:
+    allow-bean-definition-overriding: true
