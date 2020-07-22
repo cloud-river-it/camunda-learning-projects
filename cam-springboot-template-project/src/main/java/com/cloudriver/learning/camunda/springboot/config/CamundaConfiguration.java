@@ -1,4 +1,4 @@
-package com.cloudriver.learning.camunda.config;
+package com.cloudriver.learning.camunda.springboot.config;
 
 import javax.sql.DataSource;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -8,27 +8,24 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@ComponentScan(basePackages = {"com.cloudriver.learning.camunda.springboot"})
 public class CamundaConfiguration {
 
   @Bean
   public DataSource dataSource() {
-    // Use a JNDI data source or read the properties from
-    // env or a properties file.
-    // Note: The following shows only a simple data source
-    // for In-Memory H2 database.
-
     SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
     dataSource.setDriverClass(org.h2.Driver.class);
-    dataSource.setUrl("jdbc:h2:mem:camunda;DB_CLOSE_DELAY=-1");
+    dataSource.setUrl("jdbc:h2:file:./camunda-h2-database1;DB_CLOSE_DELAY=-1");
     dataSource.setUsername("demo");
     dataSource.setPassword("demo");
+
     return dataSource;
   }
 
@@ -43,7 +40,6 @@ public class CamundaConfiguration {
 
     config.setDataSource(dataSource());
     config.setTransactionManager(transactionManager());
-
     config.setDatabaseSchemaUpdate("true");
     config.setHistory("audit");
     config.setJobExecutorActivate(true);
@@ -55,6 +51,7 @@ public class CamundaConfiguration {
   public ProcessEngineFactoryBean processEngine() {
     ProcessEngineFactoryBean factoryBean = new ProcessEngineFactoryBean();
     factoryBean.setProcessEngineConfiguration(processEngineConfiguration());
+
     return factoryBean;
   }
 

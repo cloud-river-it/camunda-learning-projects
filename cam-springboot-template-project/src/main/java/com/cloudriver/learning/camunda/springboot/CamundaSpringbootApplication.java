@@ -1,9 +1,8 @@
-package com.cloudriver.learning.camunda;
+package com.cloudriver.learning.camunda.springboot;
 
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableProcessApplication

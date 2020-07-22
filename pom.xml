@@ -18,12 +18,19 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>3.8.1</junit.version>
+    <spring.version>4.3.5.RELEASE</spring.version>
   </properties>
   <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <version> 2.3.1.RELEASE</version>
+      </dependency>
+    </dependencies>
   </dependencyManagement>
 
-
   <modules>
-    <module>camunda-springboot-project</module>
+    <module>cam-springboot-template-project</module>
   </modules>
 </project>
