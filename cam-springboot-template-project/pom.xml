@@ -9,43 +9,16 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>camunda-springboot-project</artifactId>
+	<artifactId>cam-springboot-template-project</artifactId>
 	<name>camunda springboot integration</name>
 	<description>Integration camunda with spring boot</description>
-
-	<properties>
-		<camunda.spring-boot.version>7.13.0</camunda.spring-boot.version>
-		<spring-boot.version>2.2.5.RELEASE</spring-boot.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 
 	<dependencies>
 		<dependency>
 			<groupId>org.camunda.bpm.springboot</groupId>
 			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
-			<version>${camunda.spring-boot.version}</version>
+			<version>7.13.0</version>
 		</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>org.camunda.bpm.extension.springboot</groupId>-->
-<!--			<artifactId>camunda-bpm-spring-boot-starter</artifactId>-->
-<!--			<version>2.2.0</version>-->
-<!--		</dependency>-->
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -62,16 +35,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<layout>ZIP</layout>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

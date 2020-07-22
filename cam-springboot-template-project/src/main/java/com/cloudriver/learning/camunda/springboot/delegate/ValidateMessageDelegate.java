@@ -1,4 +1,4 @@
-package com.cloudriver.learning.camunda.delegate;
+package com.cloudriver.learning.camunda.springboot.delegate;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
