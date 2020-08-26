@@ -8,11 +8,11 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-  <groupId>com.cloudriver.learning.camunda</groupId>
-  <artifactId>camunda-learning-projects</artifactId>
+  <groupId>com.company.poc.activitylog</groupId>
+  <artifactId>poc-activity-log-project</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>camunda learning projects</name>
+  <name>activity log projects</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -33,6 +33,16 @@
         <version>${camunda.springboot.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.camunda.bpm.springboot</groupId>
+        <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+        <version>${camunda.springboot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.camunda.bpm</groupId>
+        <artifactId>camunda-engine-plugin-connect</artifactId>
+        <version>${camunda.springboot.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
         <version>${h2.version}</version>
@@ -42,11 +52,19 @@
         <artifactId>jaxb-impl</artifactId>
         <version>${jaxb.version}</version>
       </dependency>
-    </dependencies>
+
+        <dependency>
+          <groupId>org.camunda.connect</groupId>
+          <artifactId>camunda-connect-bom</artifactId>
+          <scope>import</scope>
+          <type>pom</type>
+          <version>1.4.0</version>
+        </dependency>
+      </dependencies>
   </dependencyManagement>
 
   <modules>
-    <module>poc-springboot-template-project</module>
-    <module>poc-activity-log-project</module>
+    <module>poc-activitylog-api</module>
+ <module>poc-activitylog-bpmn</module>
   </modules>
 </project>

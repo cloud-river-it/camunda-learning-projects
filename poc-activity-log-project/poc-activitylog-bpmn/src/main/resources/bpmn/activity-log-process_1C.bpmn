@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0fls1oj" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:process id="Activity_log_process_1" name="Activity_log_process_1" isExecutable="true">
+    <bpmn:sequenceFlow id="SequenceFlow_1auwr6h" sourceRef="T_ACTIVITY_LOG_3" targetRef="Task_0xdx9lk" />
+    <bpmn:endEvent id="EndEvent_0qhyy7o">
+      <bpmn:incoming>SequenceFlow_162yj8u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:receiveTask id="Task_0xdx9lk" name="Message-Correlate" messageRef="Message_0wkxpyy">
+      <bpmn:incoming>SequenceFlow_1auwr6h</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0mg936d</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:serviceTask id="T_ACTIVITY_LOG_3" name="ACTIVITY_LOG" camunda:delegateExpression="${activityLogDelegate}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="CALLER_ID">T3</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0vg22wb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1auwr6h</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="StartEvent_0t8e151">
+      <bpmn:outgoing>SequenceFlow_0vg22wb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0vg22wb" sourceRef="StartEvent_0t8e151" targetRef="T_ACTIVITY_LOG_3" />
+    <bpmn:userTask id="Task_1mksx2q" name="User Task" camunda:assignee="admin" camunda:candidateUsers="admin">
+      <bpmn:incoming>SequenceFlow_0mg936d</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_162yj8u</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0mg936d" sourceRef="Task_0xdx9lk" targetRef="Task_1mksx2q" />
+    <bpmn:sequenceFlow id="SequenceFlow_162yj8u" sourceRef="Task_1mksx2q" targetRef="EndEvent_0qhyy7o" />
+  </bpmn:process>
+  <bpmn:message id="Message_0wkxpyy" name="${businessKey}" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Activity_log_process_1">
+      <bpmndi:BPMNEdge id="SequenceFlow_1auwr6h_di" bpmnElement="SequenceFlow_1auwr6h">
+        <di:waypoint x="656" y="362" />
+        <di:waypoint x="685" y="362" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0qhyy7o_di" bpmnElement="EndEvent_0qhyy7o">
+        <dc:Bounds x="956" y="344" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_0ba2l3z_di" bpmnElement="Task_0xdx9lk">
+        <dc:Bounds x="685" y="322" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_09os8lu_di" bpmnElement="T_ACTIVITY_LOG_3">
+        <dc:Bounds x="556" y="322" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0t8e151_di" bpmnElement="StartEvent_0t8e151">
+        <dc:Bounds x="447" y="345" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vg22wb_di" bpmnElement="SequenceFlow_0vg22wb">
+        <di:waypoint x="483" y="363" />
+        <di:waypoint x="556" y="363" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_10ecu9d_di" bpmnElement="Task_1mksx2q">
+        <dc:Bounds x="814" y="322" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0mg936d_di" bpmnElement="SequenceFlow_0mg936d">
+        <di:waypoint x="785" y="362" />
+        <di:waypoint x="814" y="362" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_162yj8u_di" bpmnElement="SequenceFlow_162yj8u">
+        <di:waypoint x="914" y="362" />
+        <di:waypoint x="956" y="362" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
