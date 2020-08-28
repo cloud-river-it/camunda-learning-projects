@@ -29,7 +29,7 @@ public class BpmnConfiguration {
   public DataSource dataSource() {
     SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
     dataSource.setDriverClass(org.h2.Driver.class);
-    dataSource.setUrl("jdbc:h2:file:./db/activity-log-1;DB_CLOSE_DELAY=-1");
+    dataSource.setUrl("jdbc:h2:file:./db/activity-log-2021;DB_CLOSE_DELAY=-1");
     dataSource.setUsername("admin");
     dataSource.setPassword("admin");
 

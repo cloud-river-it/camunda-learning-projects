@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0fls1oj" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:process id="Activity_log_process_poc1" name="Activity_log_process_poc1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1e59ucu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1h144j4">
+      <bpmn:incoming>SequenceFlow_1iqbuhq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1x96pgw" sourceRef="ServiceTask1" targetRef="MessageTask1" />
+    <bpmn:serviceTask id="ServiceTask1" name="Service Task" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://localhost:8083/activity</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task1",  "value":"logging from task1"}</camunda:inputParameter>
+            <camunda:outputParameter name="response">${response}
+</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="correlateID">${execution.processBusinessKey}</camunda:inputParameter>
+          <camunda:outputParameter name="correlateID">${execution.processBusinessKey}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1e59ucu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1x96pgw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1e59ucu" sourceRef="StartEvent_1" targetRef="ServiceTask1" />
+    <bpmn:intermediateCatchEvent id="MessageTask1" name="MessageTask1" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="correlateID">${correlateID}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1x96pgw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19ul97i</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1p4thk0" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_19ul97i" sourceRef="MessageTask1" targetRef="Task_0yhirlg" />
+    <bpmn:sequenceFlow id="SequenceFlow_1iqbuhq" sourceRef="Task_0yhirlg" targetRef="EndEvent_1h144j4" />
+    <bpmn:userTask id="Task_0yhirlg" name="User ask">
+      <bpmn:incoming>SequenceFlow_19ul97i</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1iqbuhq</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:message id="Message_1p4thk0" name="${correlateID}-Task1" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Activity_log_process_poc1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="436" y="349" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1h144j4_di" bpmnElement="EndEvent_1h144j4">
+        <dc:Bounds x="864" y="349" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1x96pgw_di" bpmnElement="SequenceFlow_1x96pgw">
+        <di:waypoint x="612" y="367" />
+        <di:waypoint x="657" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1r395e1_di" bpmnElement="ServiceTask1">
+        <dc:Bounds x="512" y="327" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1e59ucu_di" bpmnElement="SequenceFlow_1e59ucu">
+        <di:waypoint x="472" y="367" />
+        <di:waypoint x="512" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1efxup5_di" bpmnElement="MessageTask1">
+        <dc:Bounds x="657" y="349" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="638" y="392" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_19ul97i_di" bpmnElement="SequenceFlow_19ul97i">
+        <di:waypoint x="693" y="367" />
+        <di:waypoint x="728" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1iqbuhq_di" bpmnElement="SequenceFlow_1iqbuhq">
+        <di:waypoint x="828" y="367" />
+        <di:waypoint x="864" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1l4515v_di" bpmnElement="Task_0yhirlg">
+        <dc:Bounds x="728" y="327" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
