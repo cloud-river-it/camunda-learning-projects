@@ -2,6 +2,7 @@ package com.company.poc.activitylog.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javax.servlet.Filter;
 import javax.sql.DataSource;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -23,15 +24,24 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @ComponentScan(basePackages = {"com.company.poc.activitylog"})
-public class BpmnConfiguration {
+public class CamundaConfiguration {
+
+  @Bean
+  public Properties dataSourceProperties() {
+    Properties properties = new Properties();
+    properties.put("jdbcBatchProcessing", false);
+
+    return properties;
+  }
 
   @Bean
   public DataSource dataSource() {
     SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
     dataSource.setDriverClass(org.h2.Driver.class);
-    dataSource.setUrl("jdbc:h2:file:./db/activity-log-2021;DB_CLOSE_DELAY=-1");
+    dataSource.setUrl("jdbc:h2:file:./db/activity-log-2022;DB_CLOSE_DELAY=-1");
     dataSource.setUsername("admin");
     dataSource.setPassword("admin");
+    dataSource.setConnectionProperties(dataSourceProperties());
 
     return dataSource;
   }
@@ -44,7 +54,6 @@ public class BpmnConfiguration {
   @Bean
   public SpringProcessEngineConfiguration processEngineConfiguration() {
     SpringProcessEngineConfiguration config = new SpringProcessEngineConfiguration();
-
     config.setDataSource(dataSource());
     config.setTransactionManager(transactionManager());
     config.setDatabaseSchemaUpdate("true");
@@ -52,7 +61,6 @@ public class BpmnConfiguration {
     config.setJobExecutorActivate(true);
     List<ProcessEnginePlugin> processEnginePlugins = new ArrayList<>();
     processEnginePlugins.add(connectProcessEnginePlugin());
-
     config.setProcessEnginePlugins(processEnginePlugins);
 
     return config;

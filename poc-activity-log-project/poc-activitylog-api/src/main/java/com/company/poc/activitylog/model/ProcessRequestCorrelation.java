@@ -3,18 +3,18 @@ package com.company.poc.activitylog.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResponseCorrelation {
+public class ProcessRequestCorrelation {
 
   private String messageName;
   private String businessKey;
-  Map<String, ResponseProcessVariables> processVariables =  new HashMap<>();
+  Map<String, ProcessRequestVariables> processVariables =  new HashMap<>();
 
 
-  public ResponseCorrelation(){
+  public ProcessRequestCorrelation(){
 
   }
 
-  public ResponseCorrelation(String businessKey, String messageName) {
+  public ProcessRequestCorrelation(String businessKey, String messageName) {
     this.messageName = messageName;
     this.businessKey = businessKey;
   }
@@ -35,12 +35,12 @@ public class ResponseCorrelation {
     this.businessKey = businessKey;
   }
 
-  public Map<String, ResponseProcessVariables> getProcessVariables() {
+  public Map<String, ProcessRequestVariables> getProcessVariables() {
     return processVariables;
   }
 
   public void setProcessVariables(
-      Map<String, ResponseProcessVariables> processVariables) {
+      Map<String, ProcessRequestVariables> processVariables) {
     this.processVariables = processVariables;
   }
 }

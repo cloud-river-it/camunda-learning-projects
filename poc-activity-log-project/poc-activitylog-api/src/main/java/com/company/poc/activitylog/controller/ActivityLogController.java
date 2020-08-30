@@ -1,8 +1,8 @@
 package com.company.poc.activitylog.controller;
 
 
-import com.company.poc.activitylog.model.Request;
-import com.company.poc.activitylog.model.ResponseCorrelation;
+import com.company.poc.activitylog.model.ApiRequest;
+import com.company.poc.activitylog.model.ProcessRequestCorrelation;
 import com.company.poc.activitylog.service.ActivityLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,10 @@ public class ActivityLogController {
     this.logService = logService;
   }
 
-  @PostMapping("/activity")
-  public ResponseEntity<ResponseCorrelation> traceLog(@RequestBody Request request){
+  @PostMapping("/activity/log")
+  public ResponseEntity<ProcessRequestCorrelation> traceLog(@RequestBody ApiRequest request){
     logService.startLogging(request);
-    return ResponseEntity.ok(new ResponseCorrelation(request.getBusinessKey(), request.getTask()));
+    return ResponseEntity.ok(new ProcessRequestCorrelation(request.getBusinessKey(), request.getTask()));
   }
 
 }

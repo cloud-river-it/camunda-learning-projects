@@ -1,2 +1,6 @@
 server:
   port: 8083
+
+
+log.filePath: "/Users/fanida/Documents/CLOUD-RIVER/PROJECTS/camunda-learning-project/poc-activity-log-project/logs/activity-logs-"
+process.uri: "http://localhost:8085/process/correlation"

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0fls1oj" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:process id="Activity_log_process_poc_v1" name="Activity_log_process_poc_v1" isExecutable="true">
+    <bpmn:endEvent id="EndEvent_0qhyy7o">
+      <bpmn:incoming>SequenceFlow_162yj8u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:receiveTask id="MessageTask3" name="MessageTask3" messageRef="Message_0wkxpyy">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="correlateID">${correlateID}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1jge73p</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0mg936d</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:startEvent id="StartEvent_0t8e151">
+      <bpmn:outgoing>SequenceFlow_0vg22wb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0vg22wb" sourceRef="StartEvent_0t8e151" targetRef="SubProcess_1u730pq" />
+    <bpmn:userTask id="Task_1mksx2q" name="User Task" camunda:assignee="admin" camunda:candidateUsers="admin">
+      <bpmn:incoming>SequenceFlow_0mg936d</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_162yj8u</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0mg936d" sourceRef="MessageTask3" targetRef="Task_1mksx2q" />
+    <bpmn:sequenceFlow id="SequenceFlow_162yj8u" sourceRef="Task_1mksx2q" targetRef="EndEvent_0qhyy7o" />
+    <bpmn:serviceTask id="ServiceTask3" name="ServiceTask3&#10;">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://localhost:8083/activity/log</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task3",  "value":"logging from task3"}</camunda:inputParameter>
+            <camunda:outputParameter name="response3">${response}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1culn9v</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1jge73p</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1jge73p" sourceRef="ServiceTask3" targetRef="MessageTask3" />
+    <bpmn:subProcess id="SubProcess_1u730pq">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="correlateID">${execution.processBusinessKey}</camunda:inputParameter>
+          <camunda:outputParameter name="correlateID">${execution.processBusinessKey}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0vg22wb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1culn9v</bpmn:outgoing>
+      <bpmn:startEvent id="StartEvent_0flx4bp">
+        <bpmn:outgoing>SequenceFlow_1pnbxcn</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_0h9doyr" sourceRef="MessageTask1" targetRef="ExclusiveGateway_1bb4jlh" />
+      <bpmn:intermediateCatchEvent id="MessageTask1" name="MessageTask1" camunda:asyncBefore="true" camunda:asyncAfter="true">
+        <bpmn:incoming>SequenceFlow_06d5bza</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0h9doyr</bpmn:outgoing>
+        <bpmn:messageEventDefinition messageRef="Message_0cma73e" />
+      </bpmn:intermediateCatchEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_1pnbxcn" sourceRef="StartEvent_0flx4bp" targetRef="ExclusiveGateway_198jlmh" />
+      <bpmn:parallelGateway id="ExclusiveGateway_198jlmh">
+        <bpmn:incoming>SequenceFlow_1pnbxcn</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_038j2n8</bpmn:outgoing>
+        <bpmn:outgoing>SequenceFlow_1quf588</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:sequenceFlow id="SequenceFlow_06d5bza" sourceRef="ServiceTask1" targetRef="MessageTask1" />
+      <bpmn:sequenceFlow id="SequenceFlow_038j2n8" sourceRef="ExclusiveGateway_198jlmh" targetRef="ServiceTask1" />
+      <bpmn:serviceTask id="ServiceTask1" name="ServiceTask1" camunda:asyncBefore="true" camunda:asyncAfter="true">
+        <bpmn:extensionElements>
+          <camunda:connector>
+            <camunda:inputOutput>
+              <camunda:inputParameter name="url">http://localhost:8083/activity/log</camunda:inputParameter>
+              <camunda:inputParameter name="method">POST</camunda:inputParameter>
+              <camunda:inputParameter name="headers">
+                <camunda:map>
+                  <camunda:entry key="Content-Type">application/json</camunda:entry>
+                </camunda:map>
+              </camunda:inputParameter>
+              <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task1",  "value":"logging from task1"}</camunda:inputParameter>
+              <camunda:outputParameter name="response1">${response}</camunda:outputParameter>
+            </camunda:inputOutput>
+            <camunda:connectorId>http-connector</camunda:connectorId>
+          </camunda:connector>
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_038j2n8</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_06d5bza</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="EndEvent_0bmb95k">
+        <bpmn:incoming>SequenceFlow_0tn2rt4</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_0ngjsng" sourceRef="MessageTask2" targetRef="ExclusiveGateway_1bb4jlh" />
+      <bpmn:intermediateCatchEvent id="MessageTask2" name="MessageTask2" camunda:asyncBefore="true" camunda:asyncAfter="true">
+        <bpmn:incoming>SequenceFlow_141epij</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0ngjsng</bpmn:outgoing>
+        <bpmn:messageEventDefinition messageRef="Message_1fe7hak" />
+      </bpmn:intermediateCatchEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_141epij" sourceRef="ServiceTask2" targetRef="MessageTask2" />
+      <bpmn:sequenceFlow id="SequenceFlow_1quf588" sourceRef="ExclusiveGateway_198jlmh" targetRef="ServiceTask2" />
+      <bpmn:serviceTask id="ServiceTask2" name="ServiceTask2&#10;" camunda:asyncBefore="true" camunda:asyncAfter="true">
+        <bpmn:extensionElements>
+          <camunda:connector>
+            <camunda:inputOutput>
+              <camunda:inputParameter name="url">http://localhost:8083/activity/log</camunda:inputParameter>
+              <camunda:inputParameter name="method">POST</camunda:inputParameter>
+              <camunda:inputParameter name="headers">
+                <camunda:map>
+                  <camunda:entry key="Content-Type">application/json</camunda:entry>
+                </camunda:map>
+              </camunda:inputParameter>
+              <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task2",  "value":"logging from task2"}</camunda:inputParameter>
+              <camunda:outputParameter name="response2">${response}</camunda:outputParameter>
+            </camunda:inputOutput>
+            <camunda:connectorId>http-connector</camunda:connectorId>
+          </camunda:connector>
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_1quf588</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_141epij</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:parallelGateway id="ExclusiveGateway_1bb4jlh">
+        <bpmn:incoming>SequenceFlow_0h9doyr</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_0ngjsng</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0tn2rt4</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:sequenceFlow id="SequenceFlow_0tn2rt4" sourceRef="ExclusiveGateway_1bb4jlh" targetRef="EndEvent_0bmb95k" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="SequenceFlow_1culn9v" sourceRef="SubProcess_1u730pq" targetRef="ServiceTask3" />
+  </bpmn:process>
+  <bpmn:message id="Message_0wkxpyy" name="${execution.processBusinessKey}-Task3" />
+  <bpmn:message id="Message_1fe7hak" name="${execution.processBusinessKey}-Task2" />
+  <bpmn:message id="Message_0cma73e" name="${execution.processBusinessKey}-Task1" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Activity_log_process_poc_v1">
+      <bpmndi:BPMNShape id="EndEvent_0qhyy7o_di" bpmnElement="EndEvent_0qhyy7o">
+        <dc:Bounds x="1100" y="345" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_0ba2l3z_di" bpmnElement="MessageTask3">
+        <dc:Bounds x="822" y="323" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0t8e151_di" bpmnElement="StartEvent_0t8e151">
+        <dc:Bounds x="22" y="338" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vg22wb_di" bpmnElement="SequenceFlow_0vg22wb">
+        <di:waypoint x="58" y="356" />
+        <di:waypoint x="107" y="356" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_10ecu9d_di" bpmnElement="Task_1mksx2q">
+        <dc:Bounds x="967" y="323" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0mg936d_di" bpmnElement="SequenceFlow_0mg936d">
+        <di:waypoint x="922" y="363" />
+        <di:waypoint x="967" y="363" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_162yj8u_di" bpmnElement="SequenceFlow_162yj8u">
+        <di:waypoint x="1067" y="363" />
+        <di:waypoint x="1100" y="363" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0cbw1b9_di" bpmnElement="ServiceTask3">
+        <dc:Bounds x="675" y="323" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1jge73p_di" bpmnElement="SequenceFlow_1jge73p">
+        <di:waypoint x="775" y="363" />
+        <di:waypoint x="822" y="363" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SubProcess_1u730pq_di" bpmnElement="SubProcess_1u730pq" isExpanded="true">
+        <dc:Bounds x="107" y="214" width="520" height="283" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1culn9v_di" bpmnElement="SequenceFlow_1culn9v">
+        <di:waypoint x="627" y="363" />
+        <di:waypoint x="675" y="363" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_0flx4bp_di" bpmnElement="StartEvent_0flx4bp">
+        <dc:Bounds x="128" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_0zc5uou_di" bpmnElement="ExclusiveGateway_198jlmh">
+        <dc:Bounds x="213" y="325" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_08tvm9r_di" bpmnElement="MessageTask2">
+        <dc:Bounds x="443" y="407" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="424" y="450" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1aatpem_di" bpmnElement="MessageTask1">
+        <dc:Bounds x="443" y="256" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="424" y="299" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1urxf0t_di" bpmnElement="ServiceTask1">
+        <dc:Bounds x="293" y="234" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0bmb95k_di" bpmnElement="EndEvent_0bmb95k">
+        <dc:Bounds x="571" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0zfdhj0_di" bpmnElement="ServiceTask2">
+        <dc:Bounds x="293" y="385" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0h9doyr_di" bpmnElement="SequenceFlow_0h9doyr">
+        <di:waypoint x="479" y="274" />
+        <di:waypoint x="517" y="274" />
+        <di:waypoint x="517" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1pnbxcn_di" bpmnElement="SequenceFlow_1pnbxcn">
+        <di:waypoint x="164" y="350" />
+        <di:waypoint x="213" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_06d5bza_di" bpmnElement="SequenceFlow_06d5bza">
+        <di:waypoint x="393" y="274" />
+        <di:waypoint x="443" y="274" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_038j2n8_di" bpmnElement="SequenceFlow_038j2n8">
+        <di:waypoint x="238" y="325" />
+        <di:waypoint x="238" y="274" />
+        <di:waypoint x="293" y="274" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ngjsng_di" bpmnElement="SequenceFlow_0ngjsng">
+        <di:waypoint x="479" y="425" />
+        <di:waypoint x="517" y="425" />
+        <di:waypoint x="517" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_141epij_di" bpmnElement="SequenceFlow_141epij">
+        <di:waypoint x="393" y="425" />
+        <di:waypoint x="443" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1quf588_di" bpmnElement="SequenceFlow_1quf588">
+        <di:waypoint x="238" y="375" />
+        <di:waypoint x="238" y="439" />
+        <di:waypoint x="293" y="439" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_1xptvih_di" bpmnElement="ExclusiveGateway_1bb4jlh">
+        <dc:Bounds x="492" y="325" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0tn2rt4_di" bpmnElement="SequenceFlow_0tn2rt4">
+        <di:waypoint x="542" y="350" />
+        <di:waypoint x="571" y="350" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

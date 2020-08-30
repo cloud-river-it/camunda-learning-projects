@@ -1,7 +1,7 @@
 package com.company.poc.activitylog.model;
 
 
-public class Request {
+public class ApiRequest {
 
   private String businessKey;
 

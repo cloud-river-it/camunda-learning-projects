@@ -1,16 +1,16 @@
 package com.company.poc.activitylog.model;
 
 
-public class ResponseProcessVariables {
+public class ProcessRequestVariables {
 
   String value ;
   String type ;
 
-  public ResponseProcessVariables() {
+  public ProcessRequestVariables() {
 
   }
 
-  public ResponseProcessVariables(String value, String type) {
+  public ProcessRequestVariables(String value, String type) {
     this.value = value;
     this.type = type;
   }
