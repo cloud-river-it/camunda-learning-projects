@@ -42,11 +42,11 @@ public class ActivityLogService {
     LocalDateTime twoSecondsLater = LocalDateTime.now().plusSeconds(10);
     Runnable runnableTask = () -> {
       try {
+        Files.write(Paths.get(filePath.concat(request.getTask()).concat(".log")), ("").getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE);
+
         while (twoSecondsLater.isAfter(LocalDateTime.now())) {
-          String out = request.getValue().concat(":").concat(String.valueOf(LocalDateTime.now()))
-              .concat("\r\n");
-          Files.write(Paths.get(filePath.concat(request.getTask()).concat(".log")), (out).getBytes(StandardCharsets.UTF_8),
-              StandardOpenOption.APPEND);
+          String out = request.getValue().concat(":").concat(String.valueOf(LocalDateTime.now())).concat("\r\n");
+          Files.write(Paths.get(filePath.concat(request.getTask()).concat(".log")), (out).getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         }
 
       } catch (Exception e) {

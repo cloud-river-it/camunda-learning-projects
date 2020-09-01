@@ -35,7 +35,7 @@
               </camunda:map>
             </camunda:inputParameter>
             <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task5",  "value":"logging from task5"}</camunda:inputParameter>
-            <camunda:outputParameter name="response3">${response}</camunda:outputParameter>
+            <camunda:outputParameter name="response5">${response}</camunda:outputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
@@ -143,7 +143,7 @@
                 </camunda:map>
               </camunda:inputParameter>
               <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task3",  "value":"logging from task3"}</camunda:inputParameter>
-              <camunda:outputParameter name="response2">${response}</camunda:outputParameter>
+              <camunda:outputParameter name="response3">${response}</camunda:outputParameter>
             </camunda:inputOutput>
             <camunda:connectorId>http-connector</camunda:connectorId>
           </camunda:connector>
@@ -163,7 +163,7 @@
                 </camunda:map>
               </camunda:inputParameter>
               <camunda:inputParameter name="payload">{"businessKey":"${execution.processBusinessKey}",   "task": "Task4",  "value":"logging from task4"}</camunda:inputParameter>
-              <camunda:outputParameter name="response2">${response}</camunda:outputParameter>
+              <camunda:outputParameter name="response4">${response}</camunda:outputParameter>
             </camunda:inputOutput>
             <camunda:connectorId>http-connector</camunda:connectorId>
           </camunda:connector>

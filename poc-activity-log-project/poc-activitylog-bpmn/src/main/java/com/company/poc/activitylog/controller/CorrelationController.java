@@ -19,21 +19,22 @@ public class CorrelationController {
   }
 
   @PostMapping("/process/correlation")
-  public MessageCorrelationResult correlate(@RequestBody final CorrelationBody correlationBody) {
-    return this.correlateWithException(correlationBody);
+  public CorrelationBody correlate(@RequestBody final CorrelationBody correlationBody) {
+    correlateWithException(correlationBody);
+    return correlationBody;
   }
 
-  private MessageCorrelationResult correlateWithException(final CorrelationBody correlationBody) {
+  private void correlateWithException(final CorrelationBody correlationBody) {
     try {
-     return runtimeService
+      runtimeService
           .createMessageCorrelation(correlationBody.getMessageName())
           .processInstanceBusinessKey(correlationBody.getBusinessKey())
-          .correlateWithResult();
-    } catch (OptimisticLockingException e) {
-     return runtimeService
+          .correlate();
+    } catch (OptimisticLockingException | MismatchingMessageCorrelationException e) {
+      runtimeService
           .createMessageCorrelation(correlationBody.getMessageName())
           .processInstanceBusinessKey(correlationBody.getBusinessKey())
-          .correlateWithResult();
+          .correlate();
     }
   }
 
